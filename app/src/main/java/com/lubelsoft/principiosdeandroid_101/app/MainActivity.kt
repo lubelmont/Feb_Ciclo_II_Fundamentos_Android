@@ -10,9 +10,15 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.FirebaseFirestore
 import com.lubelsoft.principiosdeandroid_101.R
 
 class MainActivity : AppCompatActivity() {
+
+
+    private lateinit var db: FirebaseFirestore
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,8 +47,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             iniciarSesion(etUser.text.toString().trim(), etPassword.text.toString().trim())
+            //testConection()
         }
 
+
+    }
+
+    private fun testConection(){
+
+        db = FirebaseFirestore.getInstance()
+        db.collection("test").add(mapOf("timestamp" to System.currentTimeMillis()))
 
     }
 
@@ -50,20 +64,30 @@ class MainActivity : AppCompatActivity() {
     private fun iniciarSesion(usuario: String, password: String){
 
 
-        if(usuario == "admin" && password == "123456"){
+        db = FirebaseFirestore.getInstance()
 
-            Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
-            navigateToListContry()
+        db.collection("users")
+            .whereEqualTo("username", usuario)
+            .whereEqualTo("password", password)
+            .get()
+            .addOnSuccessListener { documents ->
+                if(documents.isEmpty){
+                    Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
+                    navigateToListContry()
 
-        }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents: ", exception)
 
-        Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
-
+            }
 
     }
 
     private fun navigateToListContry(){
-        val intent = Intent(this,ListContryActivity::class.java)
+        val intent = Intent(this,HomeActivity::class.java)
         startActivity(intent)
         finish()
     }
