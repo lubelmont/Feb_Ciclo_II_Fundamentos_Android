@@ -1,7 +1,9 @@
 package com.lubelsoft.principiosdeandroid_101.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -25,16 +27,47 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val btnOne = findViewById<AppCompatButton>(R.id.btnOne)
-        val etOne = findViewById<AppCompatEditText>(R.id.etOne)
+        val btnIniciar = findViewById<AppCompatButton>(R.id.btnOne)
+        val etUser = findViewById<AppCompatEditText>(R.id.etUser)
+        val etPassword = findViewById<AppCompatEditText>(R.id.etPassword)
 
-        btnOne.setOnClickListener {
-            Log.i("MainActivity", "Hola ${etOne.text}" )
+
+        btnIniciar.setOnClickListener {
+
+            if(etUser.text.isNullOrEmpty() || etPassword.text.isNullOrEmpty()){
+                Toast.makeText(this, "Por favor ingrese usuario y contraseña", Toast.LENGTH_SHORT).show()
+
+                return@setOnClickListener
+            }
+
+            iniciarSesion(etUser.text.toString().trim(), etPassword.text.toString().trim())
         }
 
 
+    }
+
+
+    private fun iniciarSesion(usuario: String, password: String){
+
+
+        if(usuario == "admin" && password == "123456"){
+
+            Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
+            navigateToListContry()
+
+        }
+
+        Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
+
 
     }
+
+    private fun navigateToListContry(){
+        val intent = Intent(this,ListContryActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
 }
 
 

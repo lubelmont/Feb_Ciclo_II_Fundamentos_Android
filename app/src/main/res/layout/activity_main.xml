@@ -7,15 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".app.MainActivity">
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/main_activity_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+    </androidx.appcompat.widget.AppCompatTextView>
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etOne"
+        android:id="@+id/etUser"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnOne"
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="32dp"
+        >
+    </androidx.appcompat.widget.AppCompatEditText>
+
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPassword"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnOne"
+        android:inputType="textPassword"
         >
 
     </androidx.appcompat.widget.AppCompatEditText>
@@ -24,13 +49,14 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnOne"
         android:layout_width="250dp"
-        android:layout_height="120dp"
-        android:text="Boton"
-
+        android:layout_height="wrap_content"
+        android:text="@string/main_activity_btn_iniciar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/purple_200"
+        >
 
     </androidx.appcompat.widget.AppCompatButton>
 
