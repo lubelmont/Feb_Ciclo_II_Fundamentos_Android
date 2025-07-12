@@ -9,12 +9,21 @@
 
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="@android:color/white"
+        android:elevation="4dp"
+    />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCountries"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="16dp"
+        android:paddingTop="50dp"
         tools:listitem="@layout/country_card_view"
 
         />
