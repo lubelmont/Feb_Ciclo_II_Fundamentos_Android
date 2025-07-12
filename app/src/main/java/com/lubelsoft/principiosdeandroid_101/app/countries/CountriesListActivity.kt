@@ -1,5 +1,6 @@
 package com.lubelsoft.principiosdeandroid_101.app.countries
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -34,7 +35,7 @@ class CountriesListActivity : AppCompatActivity() {
     }
 
 
-    fun getContriesFromAmerica(){
+    private fun getContriesFromAmerica(){
         var client = OkHttpClient()
         var request = okhttp3.Request.Builder()
             .url("https://restcountries.com/v3.1/region/Americas?fields=name,flags,cca2")
@@ -84,6 +85,17 @@ class CountriesListActivity : AppCompatActivity() {
 
                         val adapter = CountryAdapter(countriesList)
                         rvCountries.adapter = adapter
+
+                        adapter.setOnItemClickListener { country ->
+
+                            val intent = Intent(this@CountriesListActivity, CountryDetailActivity::class.java)
+                            intent.putExtra("country_name", country.name)
+                            intent.putExtra("country_official_name", country.officialName)
+                            intent.putExtra("country_image_url", country.imageURL)
+                            intent.putExtra("country_code", country.code)
+                            startActivity(intent)
+
+                        }
 
 
 

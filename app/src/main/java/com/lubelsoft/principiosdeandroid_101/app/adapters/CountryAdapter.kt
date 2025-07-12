@@ -13,8 +13,11 @@ import com.lubelsoft.principiosdeandroid_101.app.models.Country
 
 class CountryAdapter(private val countriesList: List<Country>) :
 
+
+
     RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
 
+    private var onItemClickListener: ((Country) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
             val cuntryView = LayoutInflater.from(parent.context)
@@ -23,6 +26,12 @@ class CountryAdapter(private val countriesList: List<Country>) :
 
 
     }
+
+
+    fun setOnItemClickListener(listener: (Country) -> Unit){
+        onItemClickListener = listener
+    }
+
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
        val country = countriesList[position]
@@ -53,6 +62,10 @@ class CountryAdapter(private val countriesList: List<Country>) :
             Glide.with(itemView.context)
                 .load(country.imageURL)
                 .into(imgFlag)
+
+            itemView.setOnClickListener {
+                onItemClickListener?.invoke(country)
+            }
 
         }
 
