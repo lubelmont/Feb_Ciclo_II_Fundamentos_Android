@@ -2,8 +2,10 @@ package com.lubelsoft.principiosdeandroid_101.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.lubelsoft.principiosdeandroid_101.R
 import com.lubelsoft.principiosdeandroid_101.app.countries.CountriesListActivity
+import androidx.core.content.edit
+import com.lubelsoft.principiosdeandroid_101.app.about.AboutUsActivity
 
 class HomeActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
@@ -41,12 +45,28 @@ class HomeActivity : AppCompatActivity(),
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
 
+        val footerView = layoutInflater.inflate(R.layout.nav_footer, navView, false)
+        navView.addView(footerView, navView.childCount)
+        footerView.findViewById<AppCompatButton>(R.id.nav_logout).setOnClickListener {
+            logout()
+        }
+
+
+
+
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
             0,0
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+
+        //Poner ususario en el navigation view
+
+        val headerView = navView.getHeaderView(0)
+        val nvHeaderTitle : TextView = headerView.findViewById(R.id.nav_header_title)
+        nvHeaderTitle.text = MainActivity.currentUserName ?: "Invitado"
 
 
 
@@ -66,11 +86,36 @@ class HomeActivity : AppCompatActivity(),
         startActivity(intent)
     }
 
+    private fun goToMain(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    private fun goToAbout() {
+        val intent = Intent(this, AboutUsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun logout() {
+        val prefs = getSharedPreferences("user_session", MODE_PRIVATE)
+        prefs.edit { clear() }
+        MainActivity.currentUser = null
+        MainActivity.currentUserName = null
+        MainActivity.currentUserLastName = null
+        goToMain()
+        finishAffinity()
+    }
+
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_paises-> {
                 goToCountries()
             }
+            R.id.nav_acerca -> {
+                goToAbout()
+            }
+
         }
        drawerLayout.closeDrawers()
 

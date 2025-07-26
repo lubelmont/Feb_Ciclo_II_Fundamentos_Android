@@ -3,5 +3,6 @@
     <string name="main_activity_btn_iniciar">Iniciar</string>
     <string name="main_activity_title">Inicio de sesión</string>
     <string name="paises_de_america">Paises de America</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
 
 </resources>

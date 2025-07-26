@@ -18,6 +18,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
 
+    companion object{
+        var currentUserName: String? = null
+        var currentUserLastName: String? = null
+        var currentUser: String? = null
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +36,20 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+
+        val prefs = getSharedPreferences("user_session", MODE_PRIVATE)
+        val username = prefs.getString("username", null)
+        if(!username.isNullOrEmpty()){
+            currentUser = username
+            currentUserName = prefs.getString("currentUserName", null)
+            currentUserLastName = prefs.getString("currentUserLastName", null)
+
+            // Si ya hay un usuario logueado, navegar a la pantalla de inicio
+            navigateToHome()
+        }
+
 
 
 
@@ -74,8 +94,23 @@ class MainActivity : AppCompatActivity() {
                 if(documents.isEmpty){
                     Toast.makeText(this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
                 }else{
+
+                    currentUserName = documents.documents[0].getString("name")
+                    currentUserLastName = documents.documents[0].getString("last_name")
+                    currentUser = usuario
+
+                    val pref = getSharedPreferences("user_session", MODE_PRIVATE)
+                    val editor = pref.edit()
+                        .putString("username", usuario)
+                        .putString("currentUserName", currentUserName)
+                        .putString("currentUserLastName", currentUserLastName)
+
+
+                    editor.apply()
+
+
                     Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
-                    navigateToListContry()
+                    navigateToHome()
 
                 }
             }
@@ -86,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun navigateToListContry(){
+    private fun navigateToHome(){
         val intent = Intent(this,HomeActivity::class.java)
         startActivity(intent)
         finish()
