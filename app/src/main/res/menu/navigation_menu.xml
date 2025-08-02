@@ -32,5 +32,14 @@
         </menu>
     </item>
 
+    <!-- Separador visual antes del botón de cerrar sesión -->
+    <group android:id="@+id/logout_group">
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Cerrar sesión"
+            android:icon="@android:drawable/ic_lock_power_off"
+            android:orderInCategory="100"
+            />
+    </group>
 
 </menu>

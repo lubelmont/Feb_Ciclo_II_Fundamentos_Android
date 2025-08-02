@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,7 +17,6 @@ import com.google.android.material.navigation.NavigationView
 import com.lubelsoft.principiosdeandroid_101.R
 import com.lubelsoft.principiosdeandroid_101.app.countries.CountriesListActivity
 import androidx.core.content.edit
-import com.lubelsoft.principiosdeandroid_101.app.about.AboutUsActivity
 
 class HomeActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener {
@@ -45,14 +43,6 @@ class HomeActivity : AppCompatActivity(),
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener(this)
 
-        val footerView = layoutInflater.inflate(R.layout.nav_footer, navView, false)
-        navView.addView(footerView, navView.childCount)
-        footerView.findViewById<AppCompatButton>(R.id.nav_logout).setOnClickListener {
-            logout()
-        }
-
-
-
 
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
@@ -78,7 +68,6 @@ class HomeActivity : AppCompatActivity(),
             goToCountries()
         }
 
-
     }
 
     private fun goToCountries(){
@@ -92,7 +81,7 @@ class HomeActivity : AppCompatActivity(),
         finish()
     }
     private fun goToAbout() {
-        val intent = Intent(this, AboutUsActivity::class.java)
+        val intent = Intent(this, BasseActivity::class.java)
         startActivity(intent)
     }
 
@@ -115,7 +104,9 @@ class HomeActivity : AppCompatActivity(),
             R.id.nav_acerca -> {
                 goToAbout()
             }
-
+            R.id.nav_logout -> {
+                logout()
+            }
         }
        drawerLayout.closeDrawers()
 
